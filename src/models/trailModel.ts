@@ -31,6 +31,15 @@ export function getAllTrails(): TrailWithRegion[] {
         .all();
 }
 
-export function getTrailBySlug(slug: string): Trail | undefined {
-    return getAllTrails().find((trail) => trail.slug === slug);
+export function getTrailBySlug(slug: string): TrailWithRegion | null {
+    return getDB()
+        .query<TrailWithRegion, [string]>(
+            `
+            SELECT t.*, r.name AS region_name, r.country AS region_country
+            FROM trails t
+            INNER JOIN regions r ON r.id = t.region_id
+            WHERE t.slug = ?
+        `,
+        )
+        .get(slug);
 }
