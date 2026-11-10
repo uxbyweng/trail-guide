@@ -1,0 +1,31 @@
+<!--main_content-->
+
+{% extends "base.html" %}
+
+{% block main_content %}
+<main class="container-fluid">
+    <div class="grid">
+        {% for t in trails %}
+        <article>
+            <header>
+                <h2>
+                    {{ t.title }}
+                </h2>
+                <img src="{{ t.image_url }}" width="400" height="250">
+            </header>
+            <ul>
+                <li>{{ t.distance_km }}</li>
+                <li>{{ t.region_name }}, {{ t.region_country }} </li>
+                <li>{{ t.difficulty }}</li>
+            </ul>
+            <p>
+                {{ t.description }}
+            </p>
+            <footer>
+                <p><small>{{ t.id }} </small></p>
+            </footer>
+        </article>
+        {% endfor %}
+    </div>
+</main>
+{% endblock main_content %}
