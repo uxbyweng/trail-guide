@@ -12,7 +12,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const projectRoot = path.resolve(__dirname, "..");
 
-nunjucks.configure(path.join(projectRoot, "views"), { autoescape: true, express: app });
+// nunjucks.configure(path.join(projectRoot, "views"), { autoescape: true, express: app });
+nunjucks.configure(path.join(projectRoot, "views"), {
+    autoescape: true,
+    express: app,
+    noCache: process.env.NODE_ENV !== "production",
+});
 app.set("view engine", "html");
 app.use(express.static(path.join(projectRoot, "public")));
 app.use("/", trailRouter);
