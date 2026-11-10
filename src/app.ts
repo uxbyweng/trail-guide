@@ -11,8 +11,6 @@ const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const projectRoot = path.resolve(__dirname, "..");
-const assetsDir = path.join(projectRoot, "src", "assets");
-const cssDir = path.join(projectRoot, "src", "css");
 
 nunjucks.configure(path.join(projectRoot, "views"), { autoescape: true, express: app });
 app.set("view engine", "html");
