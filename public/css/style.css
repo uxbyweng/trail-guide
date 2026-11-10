@@ -161,8 +161,13 @@ article > header {
   background: none;
 }
 
-article > header img {
+/* The image sits inside a link now, so the link is the flex item */
+article > header .card-media {
   order: -1;
+  display: block;
+}
+
+article > header img {
   display: block;
   width: 100%;
   height: auto;
@@ -196,6 +201,36 @@ article > ul li {
   font-size: 0.625rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+/* Card title is a link, but should read like a heading */
+article > header h2 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+article > header h2 a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+/* The difficulty badge brings its own look, so it is not wrapped in a chip */
+article > ul li.has-badge {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: inherit;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* Long "Region, Country" labels get cut with an ellipsis. 12em fits
+   "Dolomites, Italy" completely; the full text stays available as tooltip. */
+article > ul li.chip-region {
+  max-width: 12em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 article > :is(p, div) {

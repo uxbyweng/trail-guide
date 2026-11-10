@@ -2,20 +2,26 @@
 <article>
     <header>
         <h2>
-            {{ t.title }}
+            <a href="/trails/{{ t.slug }}">{{ t.title }}</a>
         </h2>
-        <img src="{{ t.image_url }}" width="400" height="250">
+        {% if t.image_url %}
+        <a class="card-media" href="/trails/{{ t.slug }}" tabindex="-1" aria-hidden="true">
+            <img src="{{ t.image_url }}" alt="" width="400" height="250" loading="lazy">
+        </a>
+        {% endif %}
     </header>
     <ul>
         <li>{{ t.distance_km }} km</li>
-        <li>{{ t.region_name }}, {{ t.region_country }} </li>
-        <li>{{ t.difficulty }}</li>
+        <li class="chip-region" title="{{ t.region_name }}, {{ t.region_country }}">{{ t.region_name }}, {{ t.region_country }}</li>
+        <li class="has-badge">
+            <span class="badge badge--{{ t.difficulty }}">{{ t.difficulty | capitalize }}</span>
+        </li>
     </ul>
     <div>
         {{ t.description | safe }}
     </div>
     <footer>
-        <p><small>ID: {{ t.id }} </small></p>
+        <p><small>ID: {{ t.id }}</small></p>
     </footer>
 </article>
 {% endmacro %}
