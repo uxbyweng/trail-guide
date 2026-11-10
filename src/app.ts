@@ -1,4 +1,5 @@
 import { connectDB, closeDB } from "./db/database";
+import { loadRegions } from "./middleware/regions";
 
 import express from "express";
 import nunjucks from "nunjucks";
@@ -20,6 +21,7 @@ nunjucks.configure(path.join(projectRoot, "views"), {
 });
 app.set("view engine", "html");
 app.use(express.static(path.join(projectRoot, "public")));
+app.use(loadRegions);
 app.use("/", trailRouter);
 
 // Datenbank verbinden
