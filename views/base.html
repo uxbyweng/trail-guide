@@ -19,6 +19,7 @@
 </head>
 
 <body>
+    {% from "macros/icons.html" import icon %}
 
     {% block page_header %}
     <header class="container-fluid">
@@ -53,19 +54,40 @@
     {% block main_content %}
     {% endblock %}
 
-    <footer>
-        <ul>
-            <li>
-                <a href="/imprint/">Imprint</a>
-            </li>
-            <li>
-                <a href="/contact/">Impressum</a>
-            </li>
-        </ul>
-        <div>
-            <p>
-                Copyright &copy; WENG.EU {{ Jahreszahl }}
-            </p>
+    <footer class="site-footer">
+        <div class="footer-inner container-fluid">
+
+            <div class="footer-brand">
+                <a href="/" class="logo" aria-label="Trail-Guide, back to the start page">
+                    <span class="logo-mark">{{ icon("mountain", 18) }}</span>
+                    <span>Trail-Guide</span>
+                </a>
+                <p>Hikes across the Alps, the Highlands and the Dolomites.</p>
+            </div>
+
+            <nav class="footer-nav" aria-label="Regions">
+                <h2 class="footer-title">Regions</h2>
+                <ul>
+                    {% for r in regions %}
+                    <li><a href="/regions/{{ r.slug }}">{{ r.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </nav>
+
+            <nav class="footer-nav" aria-label="Information">
+                <h2 class="footer-title">Information</h2>
+                <ul>
+                    <li><a href="/imprint/">Imprint</a></li>
+                    <li><a href="/contact/">Contact</a></li>
+                    <li><a href="/admin/">Admin</a></li>
+                </ul>
+            </nav>
+
+        </div>
+
+        <div class="footer-bottom container-fluid">
+            <p>&copy; {{ year }} WENG.EU</p>
+            <p>Built with Bun, Express and SQLite</p>
         </div>
     </footer>
 
