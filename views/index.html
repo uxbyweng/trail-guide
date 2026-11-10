@@ -1,0 +1,11 @@
+{% for t in trails %}
+<h2>{{ t.title }} </h2>
+<img src="{{ t.image_url }}" width="400" height="250">
+<ul>
+    <li>{{ t.id }} </li>
+    <li>{{ t.distance_km }}</li>
+    <li>{{ t.region }} </li>
+    <li>{{ t.difficulty }}</li>
+</ul>
+<p>{{ t.description }}</p>
+{% endfor %}

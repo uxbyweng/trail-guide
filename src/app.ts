@@ -15,8 +15,8 @@ const assetsDir = path.join(projectRoot, "src", "assets");
 const cssDir = path.join(projectRoot, "src", "css");
 
 nunjucks.configure(path.join(projectRoot, "views"), { autoescape: true, express: app });
-app.use("/assets", express.static(assetsDir));
-app.use("/css", express.static(cssDir));
+app.set("view engine", "html");
+app.use(express.static(path.join(projectRoot, "public")));
 app.use("/", trailRouter);
 
 // Datenbank verbinden
