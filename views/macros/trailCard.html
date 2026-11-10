@@ -12,7 +12,8 @@
     </header>
     <ul>
         <li>{{ t.distance_km }} km</li>
-        <li class="chip-region" title="{{ t.region_name }}, {{ t.region_country }}">{{ t.region_name }}, {{ t.region_country }}</li>
+        <li class="chip-region" title="{{ t.region_name }}, {{ t.region_country }}">{{ t.region_name }}, {{
+            t.region_country }}</li>
         <li class="has-badge">
             <span class="badge badge--{{ t.difficulty }}">{{ t.difficulty | capitalize }}</span>
         </li>
@@ -21,7 +22,7 @@
         {{ t.description | safe }}
     </div>
     <footer>
-        <p><small>ID: {{ t.id }}</small></p>
+        <p><small>{{ t.createdAt }}</small></p>
     </footer>
 </article>
 {% endmacro %}
