@@ -1,64 +1,79 @@
-<!--main_content-->
-
 {% extends "base.html" %}
 
+{% block title %}{{ trail.title }} · Trail-Guide{% endblock %}
+
 {% block main_content %}
-<main class="container-fluid">
+{% from "macros/icons.html" import icon %}
+<main class="container">
 
-    <section class="breadcrumb">
-        <a href="/">Home</a> / <a href=""></a>
-    </section>
+    <nav aria-label="breadcrumb">
+        <ul>
+            <li><a href="/">Trails</a></li>
+            <li>{{ trail.title }}</li>
+        </ul>
+    </nav>
 
-    <div class="container">
-        <article>
-            <div class="grid (only desktop) mobile untereinander">
+    <article class="trail-detail">
 
-                <!-- RECHTS(desktop)-->
-                <div class="linksDesktop">
-                    <h1 class="Title">
-                        <span>Naturschutzgebiet Ardèche-Schluchten</span>: Die besten Routen
-                    </h1>
-                    <div class="Stats">
-                        <h2>
-                            <icon star></icon> <span>4,4</span> <span>(1.704 Bewertungen)</span>
-                        </h2>
+        <header class="trail-header">
+            <span class="eyebrow">{{ trail.region_name }}</span>
+            <h1>{{ trail.title }}</h1>
+        </header>
+
+        {% if trail.image_url %}
+        <figure class="trail-photo">
+            <img src="{{ trail.image_url }}" alt="{{ trail.title }}" width="1400" height="700">
+        </figure>
+        {% endif %}
+
+        <div class="trail-side">
+            <ul class="trail-facts">
+                <li>
+                    <span class="fact-icon">{{ icon("route") }}</span>
+                    <div>
+                        <span class="eyebrow">Distance</span>
+                        <strong class="fact-value">{{ trail.distance_km }} km</strong>
                     </div>
-                    <div class="trailPhoto">
-                        <div class="img-responsive">
-                            <img src="{{ t.image_url }}" width="400" height="250" aspect-ratio: 2.09;>
-                        </div>
+                </li>
+                <li>
+                    <span class="fact-icon">{{ icon("mountain") }}</span>
+                    <div>
+                        <span class="eyebrow">Difficulty</span>
+                        <strong class="fact-value">
+                            <span class="badge badge--{{ trail.difficulty }}">{{ trail.difficulty | capitalize }}</span>
+                        </strong>
                     </div>
-                    <div class="trailDescription">
-                        <p>
-                            {{ t.description | safe }}
-                        </p>
+                </li>
+                <li>
+                    <span class="fact-icon">{{ icon("map-pin") }}</span>
+                    <div>
+                        <span class="eyebrow">Country</span>
+                        <strong class="fact-value">{{ trail.region_country }}</strong>
                     </div>
-                    <div class="trailSppecs">
-                        <ul>
-                            <li>
-                                <icon man-waling></icon>{{ t.distance_km }} km
-                            </li>
-                            <li>
-                                <icon globus></icon>{{ t.region_name }}, {{ t.region_country }}
-                            </li>
-                            <li>color box grün bei leicht, gelb bei mittelschwer, rot bei schwer{{ t.difficulty }}</li>
-                        </ul>
+                </li>
+                <li>
+                    <span class="fact-icon">{{ icon("calendar") }}</span>
+                    <div>
+                        <span class="eyebrow">Added</span>
+                        <strong class="fact-value">{{ trail.createdAt }}</strong>
                     </div>
-                </div>
+                </li>
+            </ul>
 
-                <!-- LINKS (desktop)-->
-                <div class="rechtsDesktop">
-                    <map>
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d36883.90508063157!2d11.72246674053786!3d46.598847538648485!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4778138ebc9a62fb%3A0x71d97c157cd7bf25!2sSeceda%20Ridgeline!5e0!3m2!1sde!2sde!4v1794321950257!5m2!1sde!2sde"
-                            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-                            referrerpolicy="strict-origin-when-cross-origin"></iframe>
-                    </map>
-                </div>
-
+            <div class="trail-map">
+                <iframe
+                    src="https://maps.google.com/maps?q={{ (trail.title ~ ', ' ~ trail.region_name ~ ', ' ~ trail.region_country) | urlencode }}&amp;output=embed&amp;hl=en"
+                    title="Map of {{ trail.title }}" loading="lazy" allowfullscreen
+                    referrerpolicy="strict-origin-when-cross-origin"></iframe>
             </div>
-        </article>
-    </div>
+        </div>
+
+        <section class="trail-about">
+            <h2>About this trail</h2>
+            {{ trail.description | safe }}
+        </section>
+
+    </article>
 
 </main>
 {% endblock main_content %}
