@@ -1,0 +1,21 @@
+{% macro trailCard(t) %}
+<article>
+    <header>
+        <h2>
+            {{ t.title }}
+        </h2>
+        <img src="{{ t.image_url }}" width="400" height="250">
+    </header>
+    <ul>
+        <li>{{ t.distance_km }} km</li>
+        <li>{{ t.region_name }}, {{ t.region_country }} </li>
+        <li>{{ t.difficulty }}</li>
+    </ul>
+    <div>
+        {{ t.description | safe }}
+    </div>
+    <footer>
+        <p><small>ID: {{ t.id }} </small></p>
+    </footer>
+</article>
+{% endmacro %}
