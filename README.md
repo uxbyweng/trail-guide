@@ -22,7 +22,7 @@ bun run db:seed
 bun run dev
 ```
 
-`db:seed` creates the tables and loads sample data from `data/seed.sql`. Running it again resets the database.
+`db:seed` creates the tables and loads sample data from `src/db/seed.sql`. Running it again resets the database.
 
 | Variable  | Purpose                                |
 | --------- | -------------------------------------- |
@@ -61,7 +61,7 @@ src/
   controllers/  reads the request, sends the response
   models/       all SQL lives here, queries are parameterized
   middleware/   request logger, API key check
+  db/           connection, schema and seed data, SQLite file
 views/          Nunjucks templates and macros
 public/         static files
-data/           SQLite file and seed data
 ```
