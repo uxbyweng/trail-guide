@@ -1,0 +1,64 @@
+<!--main_content-->
+
+{% extends "base.html" %}
+
+{% block main_content %}
+<main class="container-fluid">
+
+    <section class="breadcrumb">
+        <a href="/">Home</a> / <a href=""></a>
+    </section>
+
+    <div class="container">
+        <article>
+            <div class="grid (only desktop) mobile untereinander">
+
+                <!-- RECHTS(desktop)-->
+                <div class="linksDesktop">
+                    <h1 class="Title">
+                        <span>Naturschutzgebiet Ardèche-Schluchten</span>: Die besten Routen
+                    </h1>
+                    <div class="Stats">
+                        <h2>
+                            <icon star></icon> <span>4,4</span> <span>(1.704 Bewertungen)</span>
+                        </h2>
+                    </div>
+                    <div class="trailPhoto">
+                        <div class="img-responsive">
+                            <img src="{{ t.image_url }}" width="400" height="250" aspect-ratio: 2.09;>
+                        </div>
+                    </div>
+                    <div class="trailDescription">
+                        <p>
+                            {{ t.description | safe }}
+                        </p>
+                    </div>
+                    <div class="trailSppecs">
+                        <ul>
+                            <li>
+                                <icon man-waling></icon>{{ t.distance_km }} km
+                            </li>
+                            <li>
+                                <icon globus></icon>{{ t.region_name }}, {{ t.region_country }}
+                            </li>
+                            <li>color box grün bei leicht, gelb bei mittelschwer, rot bei schwer{{ t.difficulty }}</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- LINKS (desktop)-->
+                <div class="rechtsDesktop">
+                    <map>
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d36883.90508063157!2d11.72246674053786!3d46.598847538648485!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4778138ebc9a62fb%3A0x71d97c157cd7bf25!2sSeceda%20Ridgeline!5e0!3m2!1sde!2sde!4v1794321950257!5m2!1sde!2sde"
+                            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                    </map>
+                </div>
+
+            </div>
+        </article>
+    </div>
+
+</main>
+{% endblock main_content %}
