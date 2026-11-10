@@ -4,6 +4,17 @@
 
 {% block main_content %}
 <main class="container-fluid">
+    <section class="hero">
+        <span class="eyebrow">
+            Trail Guide
+        </span>
+        <h1>
+            Find your next trail.
+        </h1>
+        <p>
+            Hikes across the Alps, the Highlands and the Dolomites.
+        </p>
+    </section>
     <div class="grid">
         {% for t in trails %}
         <article>
@@ -14,15 +25,15 @@
                 <img src="{{ t.image_url }}" width="400" height="250">
             </header>
             <ul>
-                <li>{{ t.distance_km }}</li>
+                <li>{{ t.distance_km }} km</li>
                 <li>{{ t.region_name }}, {{ t.region_country }} </li>
                 <li>{{ t.difficulty }}</li>
             </ul>
-            <p>
-                {{ t.description }}
-            </p>
+            <div>
+                {{ t.description | safe }}
+            </div>
             <footer>
-                <p><small>{{ t.id }} </small></p>
+                <p><small>ID: {{ t.id }} </small></p>
             </footer>
         </article>
         {% endfor %}
