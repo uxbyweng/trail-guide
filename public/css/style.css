@@ -358,6 +358,19 @@ body > footer.site-footer {
     color: var(--pico-muted-color);
 }
 
+/* Pico turns every <nav> into a flex row with space-between, which pushed the
+   headline to the left and the list to the right. Stack them instead. */
+.footer-nav {
+    display: block;
+}
+
+/* Pico pulls the first/last <ul> of a <nav> 1rem outwards (negative margin) so
+   header links line up. In the footer that shifted the link lists out of line. */
+.footer-nav ul:first-of-type,
+.footer-nav ul:last-of-type {
+    margin: 0;
+}
+
 .footer-nav ul {
     display: grid;
     gap: 0.5rem;
