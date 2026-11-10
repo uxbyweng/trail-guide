@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}{{ region.name }} · Trail-Guide{% endblock %}
+
+{% block main_content %}
+{% from "macros/trailCard.html" import trailCard %}
+<main class="container-fluid">
+
+    <nav aria-label="breadcrumb">
+        <ul>
+            <li><a href="/regions">Regions</a></li>
+            <li>{{ region.name }}</li>
+        </ul>
+    </nav>
+
+    <header class="region-header">
+        <span class="eyebrow">{{ region.country }}</span>
+        <h1>{{ region.name }}</h1>
+        {% if region.description %}
+        <p>{{ region.description }}</p>
+        {% endif %}
+    </header>
+
+    <h2 class="region-trails-title">Trails in {{ region.name }}</h2>
+    <div class="grid">
+        {% for t in trails %}
+        {{ trailCard(t) }}
+        {% else %}
+        <p>No trails in this region yet.</p>
+        {% endfor %}
+    </div>
+
+</main>
+{% endblock main_content %}

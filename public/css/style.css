@@ -647,6 +647,32 @@ article.trail-detail > header {
     }
 }
 
+/* ---------- Region page ---------- */
+
+.region-header {
+    padding-block: 1rem 2rem;
+}
+
+.region-header h1 {
+    max-width: 22ch;
+    margin: 0.5rem 0 0.75rem;
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    text-wrap: balance;
+}
+
+.region-header p {
+    max-width: 42rem;
+    margin: 0;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--tg-muted);
+}
+
+.region-trails-title {
+    margin: 0 0 1.25rem;
+    font-size: 1.25rem;
+}
+
 /* ---------- Motion ---------- */
 
 @media (prefers-reduced-motion: reduce) {

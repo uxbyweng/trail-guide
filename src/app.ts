@@ -6,6 +6,7 @@ import nunjucks from "nunjucks";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import trailRouter from "./routes/trailRoute";
+import regionRouter from "./routes/regionRoute";
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.locals.year = new Date().getFullYear(); // available as {{ year }} in every 
 app.use(express.static(path.join(projectRoot, "public")));
 app.use(loadRegions);
 app.use("/", trailRouter);
+app.use("/", regionRouter);
 
 // Datenbank verbinden
 connectDB();
