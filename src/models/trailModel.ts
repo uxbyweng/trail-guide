@@ -12,6 +12,7 @@ export interface Trail {
     created_at: number;
 }
 
+// trail joined
 export interface TrailWithRegion extends Trail {
     region_name: string;
     region_country: string;
@@ -28,4 +29,8 @@ export function getAllTrails(): TrailWithRegion[] {
         `,
         )
         .all();
+}
+
+export function getTrailBySlug(slug: string): Trail | undefined {
+    return getAllTrails().find((trail) => trail.slug === slug);
 }
