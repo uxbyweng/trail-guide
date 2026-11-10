@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+{% from "macros/regionCard.html" import regionCard %}
+<main class="container-fluid">
+    <section class="hero">
+        <span class="eyebrow">
+            Trail Guide
+        </span>
+        <h1>
+            Find a nice region for your next trailwalk.
+        </h1>
+        <p>
+            Hikes across the Alps, the Highlands and the Dolomites.
+        </p>
+    </section>
+    <div class="grid">
+        {% for r in regions %}
+        {{ regionCard(r) }}
+        {% endfor %}
+    </div>
+</main>
+{% endblock main_content %}

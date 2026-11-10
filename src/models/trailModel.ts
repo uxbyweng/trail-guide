@@ -43,3 +43,17 @@ export function getTrailBySlug(slug: string): TrailWithRegion | null {
         )
         .get(slug);
 }
+
+export function getTrailsByRegionId(regionId: number): TrailWithRegion[] {
+    return getDB()
+        .query<TrailWithRegion, [number]>(
+            `
+            SELECT t.*, r.name AS region_name, r.country AS region_country
+            FROM trails t
+            INNER JOIN regions r ON r.id = t.region_id
+            WHERE t.region_id = ?
+            ORDER BY t.created_at DESC
+        `,
+        )
+        .all(regionId);
+}

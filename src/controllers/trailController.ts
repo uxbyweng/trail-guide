@@ -14,7 +14,7 @@ export const showTrail = (req: Request<{ slug: string }>, res: Response) => {
     const trail = getTrailBySlug(req.params.slug);
 
     if (!trail) {
-        res.status(404).render("404", { trails: getAllTrails() });
+        res.status(404).render("404", { what: "trail", trails: getAllTrails() });
         return;
     }
 

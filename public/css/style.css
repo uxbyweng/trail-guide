@@ -83,8 +83,22 @@ h1 {
     color: var(--tg-red);
 }
 
+/* Hero stage: photo on the right, a white fade on the left keeps the text readable */
 .hero {
-    padding-block: 3rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: clamp(22rem, 46vw, 34rem);
+    margin-bottom: 2rem;
+    padding: clamp(1.5rem, 6vw, 4.5rem);
+    overflow: hidden;
+    border-radius: 20px;
+    background-color: var(--tg-surface);
+    background-image:
+        linear-gradient(90deg, rgb(255 255 255 / 0.94) 0%, rgb(255 255 255 / 0.78) 36%, rgb(255 255 255 / 0) 68%),
+        url("/img/bg_home-1920.jpg");
+    background-size: cover;
+    background-position: 78% center;
 }
 
 .hero h1 {
@@ -94,8 +108,21 @@ h1 {
 
 .hero p {
     max-width: 34rem;
+    margin: 0;
     font-size: 1.125rem;
-    color: var(--tg-muted);
+    color: #3d3c38;
+}
+
+/* Mobile: text on top with a vertical fade, the hiker stays visible below */
+@media (max-width: 47.99rem) {
+    .hero {
+        justify-content: flex-start;
+        min-height: 30rem;
+        background-image:
+            linear-gradient(180deg, rgb(255 255 255 / 0.94) 0%, rgb(255 255 255 / 0.8) 45%, rgb(255 255 255 / 0) 80%),
+            url("/img/bg_home-1920.jpg");
+        background-position: 80% bottom;
+    }
 }
 
 /* ---------- Header ---------- */
@@ -274,10 +301,10 @@ input[type="submit"] {
 
 /* ---------- Footer ---------- */
 
-body > footer {
+/* Full-width dark band, square edges, compact */
+body > footer.site-footer {
     margin-top: 4rem;
-    padding: 3rem 2rem;
-    border-radius: 24px 24px 0 0;
+    padding: 0; /* spacing lives in the inner blocks */
     background: #0e0e0d;
     color: #ffffff;
     --pico-color: #ffffff;
@@ -287,24 +314,121 @@ body > footer {
     --pico-primary-underline: rgb(255 255 255 / 0.4);
 }
 
-body > footer ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    margin: 0 0 1.5rem;
+/* Logo: accent square with the mountain icon, plus the wordmark */
+.logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    color: inherit;
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+}
+
+.logo-mark {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 8px;
+    background: var(--tg-accent);
+    color: var(--tg-ink);
+}
+
+.footer-inner {
+    display: grid;
+    gap: 1.75rem;
+    padding-block: 2.25rem 1.75rem;
+}
+
+.footer-brand p {
+    max-width: 24rem;
+    margin: 0.75rem 0 0;
+    font-size: 0.9375rem;
+    color: var(--pico-muted-color);
+}
+
+.footer-title {
+    margin: 0 0 0.75rem;
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--pico-muted-color);
+}
+
+/* Pico turns every <nav> into a flex row with space-between, which pushed the
+   headline to the left and the list to the right. Stack them instead. */
+.footer-nav {
+    display: block;
+}
+
+/* Pico pulls the first/last <ul> of a <nav> 1rem outwards (negative margin) so
+   header links line up. In the footer that shifted the link lists out of line. */
+.footer-nav ul:first-of-type,
+.footer-nav ul:last-of-type {
+    margin: 0;
+}
+
+.footer-nav ul {
+    display: grid;
+    gap: 0.5rem;
+    margin: 0;
     padding: 0;
     list-style: none;
 }
 
-body > footer li {
+.footer-nav li {
     margin: 0;
     padding: 0;
 }
 
-body > footer p {
+.footer-nav a {
+    font-size: 0.9375rem;
+    text-decoration: none;
+}
+
+.footer-nav a:hover {
+    color: var(--tg-accent);
+}
+
+.footer-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.25rem 1.5rem;
+    padding-block: 0.875rem;
+    border-top: 1px solid rgb(255 255 255 / 0.1);
+}
+
+.footer-bottom p {
     margin: 0;
     font-size: 0.75rem;
     color: var(--pico-muted-color);
+}
+
+/* Tablet: brand on top, the two link lists side by side */
+@media (min-width: 40rem) {
+    .footer-inner {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .footer-brand {
+        grid-column: 1 / -1;
+    }
+}
+
+/* Desktop: everything in one row */
+@media (min-width: 62rem) {
+    .footer-inner {
+        grid-template-columns: minmax(0, 2fr) repeat(2, minmax(0, 1fr));
+        gap: 3rem;
+    }
+
+    .footer-brand {
+        grid-column: auto;
+    }
 }
 
 /* ---------- Trail detail page ---------- */
@@ -521,6 +645,32 @@ article.trail-detail > header {
     .trail-map {
         aspect-ratio: 4 / 3;
     }
+}
+
+/* ---------- Region page ---------- */
+
+.region-header {
+    padding-block: 1rem 2rem;
+}
+
+.region-header h1 {
+    max-width: 22ch;
+    margin: 0.5rem 0 0.75rem;
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    text-wrap: balance;
+}
+
+.region-header p {
+    max-width: 42rem;
+    margin: 0;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--tg-muted);
+}
+
+.region-trails-title {
+    margin: 0 0 1.25rem;
+    font-size: 1.25rem;
 }
 
 /* ---------- Motion ---------- */

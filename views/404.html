@@ -4,22 +4,41 @@
 
 {% block main_content %}
 {% from "macros/trailCard.html" import trailCard %}
+{% from "macros/regionCard.html" import regionCard %}
 <main class="container-fluid">
     <section class="hero">
         <span class="eyebrow">
             ERROR
         </span>
         <h1>
-            <span class="red">Error 404 -</span> Sorry we could not find the trail you are searching for.
+            <span class="red">Error 404 -</span>
+            {% if what == "region" %}
+            Sorry, we could not find the region you are looking for.
+            {% else %}
+            Sorry, we could not find the trail you are looking for.
+            {% endif %}
         </h1>
         <p>
+            {% if what == "region" %}
+            Pick a region from the menu above or try one of these trails:
+            {% else %}
             Please try one of the following trails:
+            {% endif %}
         </p>
     </section>
     <div class="grid">
+        {% if what == "region" %}
+        {% for r in regions %}
+        {{ regionCard(r) }}
+        {% endfor %}
+        {% else %}
         {% for t in trails %}
         {{ trailCard(t) }}
         {% endfor %}
+        {% endif %}
+        <div class="grid">
+
+        </div>
     </div>
 </main>
 {% endblock main_content %}
