@@ -1,0 +1,25 @@
+<!--main_content-->
+
+{% extends "base.html" %}
+
+{% block main_content %}
+{% from "macros/trailCard.html" import trailCard %}
+<main class="container-fluid">
+    <section class="hero">
+        <span class="eyebrow">
+            ERROR
+        </span>
+        <h1>
+            <span class="red">Error 404 -</span> Sorry we could not find the trail you are searching for.
+        </h1>
+        <p>
+            Please try one of the following trails:
+        </p>
+    </section>
+    <div class="grid">
+        {% for t in trails %}
+        {{ trailCard(t) }}
+        {% endfor %}
+    </div>
+</main>
+{% endblock main_content %}

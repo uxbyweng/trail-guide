@@ -3,6 +3,7 @@
 {% extends "base.html" %}
 
 {% block main_content %}
+{% from "macros/trailCard.html" import trailCard %}
 <main class="container-fluid">
     <section class="hero">
         <span class="eyebrow">
@@ -17,25 +18,7 @@
     </section>
     <div class="grid">
         {% for t in trails %}
-        <article>
-            <header>
-                <h2>
-                    {{ t.title }}
-                </h2>
-                <img src="{{ t.image_url }}" width="400" height="250">
-            </header>
-            <ul>
-                <li>{{ t.distance_km }} km</li>
-                <li>{{ t.region_name }}, {{ t.region_country }} </li>
-                <li>{{ t.difficulty }}</li>
-            </ul>
-            <div>
-                {{ t.description | safe }}
-            </div>
-            <footer>
-                <p><small>ID: {{ t.id }} </small></p>
-            </footer>
-        </article>
+        {{ trailCard(t) }}
         {% endfor %}
     </div>
 </main>

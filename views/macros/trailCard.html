@@ -1,0 +1,28 @@
+{% macro trailCard(t) %}
+<article>
+    <header>
+        <h2>
+            <a href="/trails/{{ t.slug }}">{{ t.title }}</a>
+        </h2>
+        {% if t.image_url %}
+        <a class="card-media" href="/trails/{{ t.slug }}" tabindex="-1" aria-hidden="true">
+            <img src="{{ t.image_url }}" alt="" width="400" height="250" loading="lazy">
+        </a>
+        {% endif %}
+    </header>
+    <ul>
+        <li>{{ t.distance_km }} km</li>
+        <li class="chip-region" title="{{ t.region_name }}, {{ t.region_country }}">{{ t.region_name }}, {{
+            t.region_country }}</li>
+        <li class="has-badge">
+            <span class="badge badge--{{ t.difficulty }}">{{ t.difficulty | capitalize }}</span>
+        </li>
+    </ul>
+    <div>
+        {{ t.description | safe }}
+    </div>
+    <footer>
+        <p><small>{{ t.createdAt }}</small></p>
+    </footer>
+</article>
+{% endmacro %}

@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}{{ trail.title }} · Trail-Guide{% endblock %}
+
+{% block main_content %}
+{% from "macros/icons.html" import icon %}
+<main class="container">
+
+    <nav aria-label="breadcrumb">
+        <ul>
+            <li><a href="/">Trails</a></li>
+            <li>{{ trail.title }}</li>
+        </ul>
+    </nav>
+
+    <article class="trail-detail">
+
+        <header class="trail-header">
+            <span class="eyebrow">{{ trail.region_name }}</span>
+            <h1>{{ trail.title }}</h1>
+        </header>
+
+        {% if trail.image_url %}
+        <figure class="trail-photo">
+            <img src="{{ trail.image_url }}" alt="{{ trail.title }}" width="1400" height="700">
+        </figure>
+        {% endif %}
+
+        <div class="trail-side">
+            <ul class="trail-facts">
+                <li>
+                    <span class="fact-icon">{{ icon("route") }}</span>
+                    <div>
+                        <span class="eyebrow">Distance</span>
+                        <strong class="fact-value">{{ trail.distance_km }} km</strong>
+                    </div>
+                </li>
+                <li>
+                    <span class="fact-icon">{{ icon("mountain") }}</span>
+                    <div>
+                        <span class="eyebrow">Difficulty</span>
+                        <strong class="fact-value">
+                            <span class="badge badge--{{ trail.difficulty }}">{{ trail.difficulty | capitalize }}</span>
+                        </strong>
+                    </div>
+                </li>
+                <li>
+                    <span class="fact-icon">{{ icon("map-pin") }}</span>
+                    <div>
+                        <span class="eyebrow">Country</span>
+                        <strong class="fact-value">{{ trail.region_country }}</strong>
+                    </div>
+                </li>
+                <li>
+                    <span class="fact-icon">{{ icon("calendar") }}</span>
+                    <div>
+                        <span class="eyebrow">Added</span>
+                        <strong class="fact-value">{{ trail.createdAt }}</strong>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="trail-map">
+                <iframe
+                    src="https://maps.google.com/maps?q={{ (trail.title ~ ', ' ~ trail.region_name ~ ', ' ~ trail.region_country) | urlencode }}&amp;output=embed&amp;hl=en"
+                    title="Map of {{ trail.title }}" loading="lazy" allowfullscreen
+                    referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+        </div>
+
+        <section class="trail-about">
+            <h2>About this trail</h2>
+            {{ trail.description | safe }}
+        </section>
+
+    </article>
+
+</main>
+{% endblock main_content %}

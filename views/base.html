@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Trail-Guide</title>
+    <title>{% block title %}Trail-Guide{% endblock %}</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
     <!-- <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -36,8 +36,8 @@
                             Regions
                         </summary>
                         <ul dir="rtl">
-                            {% for t in regions %}
-                            <li><a href="'{{ t.slug }}'">{{ t.region_name }}</a></li>
+                            {% for r in regions %}
+                            <li><a href="/regions/{{ r.slug }}">{{ r.name }}</a></li>
                             {% endfor %}
                         </ul>
                     </details>
@@ -53,7 +53,7 @@
     {% block main_content %}
     {% endblock %}
 
-    <footer class="container-fluid">
+    <footer>
         <ul>
             <li>
                 <a href="/imprint/">Imprint</a>
