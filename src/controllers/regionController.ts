@@ -12,7 +12,7 @@ export const showRegion = (req: Request<{ slug: string }>, res: Response) => {
     const region = getRegionBySlug(req.params.slug);
 
     if (!region) {
-        res.status(404).render("404", { trails: getAllTrails() });
+        res.status(404).render("404", { what: "region", trails: getAllTrails() });
         return;
     }
 
