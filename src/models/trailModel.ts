@@ -52,6 +52,7 @@ export function getTrailsByRegionId(regionId: number): TrailWithRegion[] {
             FROM trails t
             INNER JOIN regions r ON r.id = t.region_id
             WHERE t.region_id = ?
+            ORDER BY t.created_at DESC
         `,
         )
         .all(regionId);
