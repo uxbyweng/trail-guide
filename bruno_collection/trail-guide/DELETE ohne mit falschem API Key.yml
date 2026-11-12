@@ -1,0 +1,18 @@
+info:
+  name: DELETE ohne mit falschem API Key
+  type: http
+  seq: 2
+
+http:
+  method: DELETE
+  url: http://localhost:1234/api/trails/9999
+  headers:
+    - name: x-api-key
+      value: falsch
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
