@@ -3,6 +3,6 @@ import { getTrails } from "../controllers/apiTrailController";
 
 const router = Router();
 
-router.get("/", getTrails);
+router.get("/trails", getTrails);
 
 export default router;
