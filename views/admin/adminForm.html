@@ -9,10 +9,10 @@
             Admin Area
         </span>
         <h1>
-            Add a new trail
+            {{ heading }}
         </h1>
         <p>
-            Create a new trail with title, region, distance and difficulty.
+            Title, region, distance, difficulty and a short description.
         </p>
     </section>
 
@@ -28,7 +28,7 @@
         </article>
         {% endif %}
 
-        <form method="post" action="/admin/trails">
+        <form method="post" action="{{ action }}">
 
             <!-- TITLE -->
             <label for="title">Title</label>
@@ -49,7 +49,7 @@
             <select id="region_id" name="region_id" required>
                 <option value="">Choose a region</option>
                 {% for r in regions %}
-                <option value="{{ r.id }}" {% if r.id == trail.region_id %}selected{% endif %}>
+                <option value="{{ r.id }}" {% if r.id==trail.region_id %}selected{% endif %}>
                     {{ r.name }}, {{ r.country }}
                 </option>
                 {% endfor %}
@@ -59,14 +59,15 @@
             <label for="difficulty">Difficulty</label>
             <select id="difficulty" name="difficulty" required>
                 <option value="">Choose a grade of difficulty</option>
-                <option value="easy" {% if trail.difficulty == "easy" %}selected{% endif %}>Easy</option>
-                <option value="moderate" {% if trail.difficulty == "moderate" %}selected{% endif %}>Moderate</option>
-                <option value="hard" {% if trail.difficulty == "hard" %}selected{% endif %}>Hard</option>
+                <option value="easy" {% if trail.difficulty=="easy" %}selected{% endif %}>Easy</option>
+                <option value="moderate" {% if trail.difficulty=="moderate" %}selected{% endif %}>Moderate</option>
+                <option value="hard" {% if trail.difficulty=="hard" %}selected{% endif %}>Hard</option>
             </select>
 
             <!-- DESCRIPTION -->
             <label for="description">Description (HTML, e.g. &lt;p&gt;Text&lt;/p&gt;)</label>
-            <textarea id="description" name="description" style="height: 16rem" required>{{ trail.description }}</textarea>
+            <textarea id="description" name="description" style="height: 16rem"
+                required>{{ trail.description }}</textarea>
 
             <button type="submit">Save</button>
             <a role="button" class="secondary" href="/admin">Cancel</a>

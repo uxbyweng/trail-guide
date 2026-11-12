@@ -4,7 +4,6 @@ import { getAllTrails, getTrailsByRegionId } from "../models/trailModel";
 import { formatDate } from "../utils/date-utils";
 
 export const showRegions = (req: Request, res: Response) => {
-    // `regions` ist durch die Middleware schon in jedem Template verfügbar
     res.render("regions");
 };
 
