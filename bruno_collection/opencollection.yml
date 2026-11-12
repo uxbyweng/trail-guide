@@ -1,7 +1,7 @@
 opencollection: 1.0.0
 
 info:
-  name: trail-guide
+  name: bruno_collection
 bundled: false
 extensions:
   bruno:
