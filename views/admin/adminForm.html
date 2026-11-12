@@ -3,7 +3,6 @@
 {% extends "base.html" %}
 
 {% block main_content %}
-{% from "macros/trailCard.html" import trailCard %}
 <main class="container-fluid">
     <section class="hero">
         <span class="eyebrow">
@@ -13,67 +12,64 @@
             Add a new trail
         </h1>
         <p>
-            Create new trails with name, title, region, distance, difficulty
+            Create a new trail with title, region, distance and difficulty.
         </p>
     </section>
+
     <section class="formular">
-        form method="post" action="{{ action }}">
+        {% if errors and errors.length %}
+        <article>
+            <strong>Please fix the following:</strong>
+            <ul>
+                {% for e in errors %}
+                <li>{{ e }}</li>
+                {% endfor %}
+            </ul>
+        </article>
+        {% endif %}
 
-        <!-- TITLE-->
-        <div class="form-floating mb-3">
-            <input class="form-control" id="title" name="title" type="text" placeholder="Title"
-                value="{{ trail.title }}" required />
+        <form method="post" action="/admin/trails">
+
+            <!-- TITLE -->
             <label for="title">Title</label>
-        </div>
+            <input id="title" name="title" type="text" value="{{ trail.title }}" required />
 
-        <!-- IMAGE URL-->
-        <div class="form-floating mb-3">
-            <input class="form-control" id="image_url" name="image_url" type="text" placeholder="Image URL"
+            <!-- IMAGE URL (full URL or local path) -->
+            <label for="image_url">Image URL or path</label>
+            <input id="image_url" name="image_url" type="text" placeholder="https://... or /img/photo.jpg"
                 value="{{ trail.image_url }}" required />
-            <label for="image_url">Image URL</label>
-        </div>
 
-        <!-- DISTANCE -->
-        <div class="form-floating mb-3">
-            <input class="form-control" id="distance_km" name="distance_km" type="number" placeholder="Distance (km)"
-                value="{{ trail.distance_km }}" required />
+            <!-- DISTANCE -->
             <label for="distance_km">Distance (km)</label>
-        </div>
+            <input id="distance_km" name="distance_km" type="number" step="0.1" min="0.1"
+                value="{{ trail.distance_km }}" required />
 
-        <!-- REGION -->
-        <div class="form-floating mb-3">
-            <select class="form-select" id="region_name" name="region_name" required>
+            <!-- REGION -->
+            <label for="region_id">Region</label>
+            <select id="region_id" name="region_id" required>
                 <option value="">Choose a region</option>
-                {% for t in regions %}
-                <option value="{{ t.region_id }}" {% if t.region_id==trail.region_name %}selected{% endif %}>
-                    {{ t.region_name }}, {{ t.region_country }}
+                {% for r in regions %}
+                <option value="{{ r.id }}" {% if r.id == trail.region_id %}selected{% endif %}>
+                    {{ r.name }}, {{ r.country }}
                 </option>
                 {% endfor %}
             </select>
-            <label for="authorId">Region</label>
-        </div>
 
-        <!-- DIFFICULTY-->
-        <div class="form-floating mb-3">
-            <select class="form-select" id="difficulty" name="difficulty" required>
+            <!-- DIFFICULTY -->
+            <label for="difficulty">Difficulty</label>
+            <select id="difficulty" name="difficulty" required>
                 <option value="">Choose a grade of difficulty</option>
-                <option value="Easy" selected>Easy</option>
-                <option value="Moderate" selected>Moderate</option>
-                <option value="Hard" selected>Hard</option>
+                <option value="easy" {% if trail.difficulty == "easy" %}selected{% endif %}>Easy</option>
+                <option value="moderate" {% if trail.difficulty == "moderate" %}selected{% endif %}>Moderate</option>
+                <option value="hard" {% if trail.difficulty == "hard" %}selected{% endif %}>Hard</option>
             </select>
-            <label for="difficulty">Region</label>
-        </div>
 
-        <!-- DESCRIPTION -->
-        <div class="form-floating mb-3">
-            <textarea class="form-control" id="description" name="description" placeholder="Description"
-                style="height: 16rem" required>{{ trial.description }}</textarea>
-            <label for="content">Description (HTML)</label>
-        </div>
+            <!-- DESCRIPTION -->
+            <label for="description">Description (HTML, e.g. &lt;p&gt;Text&lt;/p&gt;)</label>
+            <textarea id="description" name="description" style="height: 16rem" required>{{ trail.description }}</textarea>
 
-
-        <button class="btn btn-primary text-uppercase" type="submit">Save</button>
-        <a class="btn btn-outline-secondary text-uppercase" href="/admin">Cancel</a>
+            <button type="submit">Save</button>
+            <a role="button" class="secondary" href="/admin">Cancel</a>
         </form>
     </section>
 </main>

@@ -1,5 +1,4 @@
 import { getDB } from "../db/database";
-import { slugify } from "../utils/slugify-utils";
 
 export interface Trail {
     id: number;
@@ -78,19 +77,20 @@ export function deleteTrail(slug: string): void {
 }
 
 // neuen trail hinzufügen
-export function addTrail(trail: Omit<Trail, "region">) {
+export function addTrail(trail: Omit<Trail, "id">): void {
     getDB()
         .query(
-            "INSERT INTO trails (region_id, title, slug, difficulty, description, image_url, createdAt) VALUES ($region_id, $title, $slug, $difficulty, $description, $image_url, $createdAt)",
+            `INSERT INTO trails (region_id, title, slug, difficulty, distance_km, description, image_url, created_at)
+             VALUES ($region_id, $title, $slug, $difficulty, $distance_km, $description, $image_url, $created_at)`,
         )
         .run({
-            regionId: trail.region_id,
-            title: trail.title,
-            slug: trail.slug,
-            difficulty: trail.difficulty,
-            distance_km: trail.distance_km,
-            description: trail.description,
-            image_url: trail.image_url,
-            created_at: trail.created_at,
+            $region_id: trail.region_id,
+            $title: trail.title,
+            $slug: trail.slug,
+            $difficulty: trail.difficulty,
+            $distance_km: trail.distance_km,
+            $description: trail.description,
+            $image_url: trail.image_url,
+            $created_at: trail.created_at,
         });
 }

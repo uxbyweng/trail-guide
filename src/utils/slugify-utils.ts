@@ -1,6 +1,4 @@
-// Macht aus einem Titel einen URL-tauglichen Slug,
-// z. B. "Flowers: Nature's Muse" -> "flowers-nature-s-muse".
-// Der Slug ist die "ID" eines Posts in der URL (/posts/<slug>), deshalb müssen Titel eindeutig sein.
+// aus einem text einen URL-tauglichen Slug erstellen
 export function slugify(title: string): string {
     return title
         .toLowerCase()
