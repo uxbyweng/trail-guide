@@ -1,4 +1,5 @@
-{% macro trailCard(t) %}
+{% from "macros/icons.html" import icon %}
+{% macro trailCard(t, isAdmin = false) %}
 <article>
     <header>
         <h2>
@@ -11,18 +12,39 @@
         {% endif %}
     </header>
     <ul>
-        <li>{{ t.distance_km }} km</li>
-        <li class="chip-region" title="{{ t.region_name }}, {{ t.region_country }}">{{ t.region_name }}, {{
-            t.region_country }}</li>
+        <li>
+            {{ t.distance_km }} km
+        </li>
+        <li class="chip-region" title="{{ t.region_name }}, {{ t.region_country }}">
+            {{ t.region_name }},
+            {{ t.region_country }}
+        </li>
         <li class="has-badge">
-            <span class="badge badge--{{ t.difficulty }}">{{ t.difficulty | capitalize }}</span>
+            <span class="badge badge--{{ t.difficulty }}">
+                {{ t.difficulty | capitalize }}
+            </span>
         </li>
     </ul>
     <div>
         {{ t.description | safe }}
     </div>
     <footer>
-        <p><small>{{ t.createdAt }}</small></p>
+        <p>
+            <small>{{ t.createdAt }}</small>
+        </p>
+        {% if isAdmin %}
+        <div class="card-actions">
+            <a class="btn-action" href="/admin/trails/{{ t.slug }}/edit">
+                {{ icon("pencil", 16) }} Edit
+            </a>
+            <form method="post" action="/admin/trails/{{ t.slug }}/delete"
+                onsubmit="return confirm('Trail wirklich löschen?')">
+                <button class="btn-action btn-action--danger" type="submit">
+                    {{ icon("trash", 16) }} Delete
+                </button>
+            </form>
+        </div>
+        {% endif %}
     </footer>
 </article>
 {% endmacro %}

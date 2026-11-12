@@ -6,7 +6,7 @@ import path from "node:path";
 const LOG_DIR = path.join(process.cwd(), "logs");
 const LOG_FILE = path.join(LOG_DIR, "logs.txt");
 
-// Erstelle Logfiles einmal beim Start
+// erstelle Logfiles einmal beim Start
 export async function ensureLogFile(): Promise<void> {
     await mkdir(LOG_DIR, { recursive: true });
 }

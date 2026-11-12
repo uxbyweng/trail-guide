@@ -44,6 +44,19 @@ export function getTrailBySlug(slug: string): TrailWithRegion | null {
         .get(slug);
 }
 
+export function getTrailById(id: number): TrailWithRegion | null {
+    return getDB()
+        .query<TrailWithRegion, [number]>(
+            `
+            SELECT t.*, r.name AS region_name, r.country AS region_country
+            FROM trails t
+            INNER JOIN regions r ON r.id = t.region_id
+            WHERE t.id = ?
+        `,
+        )
+        .get(id);
+}
+
 export function getTrailsByRegionId(regionId: number): TrailWithRegion[] {
     return getDB()
         .query<TrailWithRegion, [number]>(
@@ -56,4 +69,51 @@ export function getTrailsByRegionId(regionId: number): TrailWithRegion[] {
         `,
         )
         .all(regionId);
+}
+
+// Trail (slug) aus db entfernen
+export function deleteTrail(slug: string): void {
+    getDB().query("DELETE FROM trails WHERE slug = ?").run(slug);
+}
+
+// felder, die man beim Bearbeiten ändern darf
+export type TrailEditableFields = Pick<Trail, "region_id" | "title" | "difficulty" | "distance_km" | "description" | "image_url">;
+
+// bestehenden trail (slug) aktualisieren
+export function updateTrail(slug: string, trail: TrailEditableFields): void {
+    getDB()
+        .query(
+            `UPDATE trails
+             SET region_id = $region_id, title = $title, difficulty = $difficulty,
+                 distance_km = $distance_km, description = $description, image_url = $image_url
+             WHERE slug = $slug`,
+        )
+        .run({
+            $region_id: trail.region_id,
+            $title: trail.title,
+            $difficulty: trail.difficulty,
+            $distance_km: trail.distance_km,
+            $description: trail.description,
+            $image_url: trail.image_url,
+            $slug: slug,
+        });
+}
+
+// neuen trail hinzufügen
+export function addTrail(trail: Omit<Trail, "id">): void {
+    getDB()
+        .query(
+            `INSERT INTO trails (region_id, title, slug, difficulty, distance_km, description, image_url, created_at)
+             VALUES ($region_id, $title, $slug, $difficulty, $distance_km, $description, $image_url, $created_at)`,
+        )
+        .run({
+            $region_id: trail.region_id,
+            $title: trail.title,
+            $slug: trail.slug,
+            $difficulty: trail.difficulty,
+            $distance_km: trail.distance_km,
+            $description: trail.description,
+            $image_url: trail.image_url,
+            $created_at: trail.created_at,
+        });
 }

@@ -1,0 +1,77 @@
+<!--main_content-->
+
+{% extends "base.html" %}
+
+{% block main_content %}
+<main class="container-fluid">
+    <section class="hero">
+        <span class="eyebrow">
+            Admin Area
+        </span>
+        <h1>
+            {{ heading }}
+        </h1>
+        <p>
+            Title, region, distance, difficulty and a short description.
+        </p>
+    </section>
+
+    <section class="formular">
+        {% if errors and errors.length %}
+        <article>
+            <strong>Please fix the following:</strong>
+            <ul>
+                {% for e in errors %}
+                <li>{{ e }}</li>
+                {% endfor %}
+            </ul>
+        </article>
+        {% endif %}
+
+        <form method="post" action="{{ action }}">
+
+            <!-- TITLE -->
+            <label for="title">Title</label>
+            <input id="title" name="title" type="text" value="{{ trail.title }}" required />
+
+            <!-- IMAGE URL (full URL or local path) -->
+            <label for="image_url">Image URL or path</label>
+            <input id="image_url" name="image_url" type="text" placeholder="https://... or /img/photo.jpg"
+                value="{{ trail.image_url }}" required />
+
+            <!-- DISTANCE -->
+            <label for="distance_km">Distance (km)</label>
+            <input id="distance_km" name="distance_km" type="number" step="0.1" min="0.1"
+                value="{{ trail.distance_km }}" required />
+
+            <!-- REGION -->
+            <label for="region_id">Region</label>
+            <select id="region_id" name="region_id" required>
+                <option value="">Choose a region</option>
+                {% for r in regions %}
+                <option value="{{ r.id }}" {% if r.id==trail.region_id %}selected{% endif %}>
+                    {{ r.name }}, {{ r.country }}
+                </option>
+                {% endfor %}
+            </select>
+
+            <!-- DIFFICULTY -->
+            <label for="difficulty">Difficulty</label>
+            <select id="difficulty" name="difficulty" required>
+                <option value="">Choose a grade of difficulty</option>
+                <option value="easy" {% if trail.difficulty=="easy" %}selected{% endif %}>Easy</option>
+                <option value="moderate" {% if trail.difficulty=="moderate" %}selected{% endif %}>Moderate</option>
+                <option value="hard" {% if trail.difficulty=="hard" %}selected{% endif %}>Hard</option>
+            </select>
+
+            <!-- DESCRIPTION -->
+            <label for="description">Description (HTML, e.g. &lt;p&gt;Text&lt;/p&gt;)</label>
+            <textarea id="description" name="description" style="height: 16rem"
+                required>{{ trail.description }}</textarea>
+
+            <button type="submit">Save</button>
+            <a role="button" class="secondary" href="/admin">Cancel</a>
+        </form>
+    </section>
+</main>
+{% endblock main_content %}
