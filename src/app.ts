@@ -8,6 +8,7 @@ import { fileURLToPath } from "node:url";
 import trailRouter from "./routes/trailRoute";
 import regionRouter from "./routes/regionRoute";
 import adminRouter from "./routes/adminRoute";
+import apiRouter from "./routes/apiRoute";
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.use(loadRegions);
 app.use("/", trailRouter);
 app.use("/", regionRouter);
 app.use("/admin/", adminRouter);
+app.use("/api/", apiRouter);
 
 // Datenbank verbinden
 connectDB();
