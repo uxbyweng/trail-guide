@@ -1,4 +1,4 @@
-{% macro trailCard(t) %}
+{% macro trailCard(t, isAdmin = false) %}
 <article>
     <header>
         <h2>
@@ -23,6 +23,9 @@
     </div>
     <footer>
         <p><small>{{ t.createdAt }}</small></p>
+        {% if isAdmin %}
+        <a role="button" href="#">Delete</a> <a role="button" href="#">Edit</a>
+        {% endif %}
     </footer>
 </article>
 {% endmacro %}
