@@ -78,7 +78,7 @@ export function deleteTrail(slug: string): void {
 }
 
 // neuen trail hinzufügen
-export function addPost(trail: Omit<Trail, "region">) {
+export function addTrail(trail: Omit<Trail, "region">) {
     getDB()
         .query(
             "INSERT INTO trails (region_id, title, slug, difficulty, description, image_url, createdAt) VALUES ($region_id, $title, $slug, $difficulty, $description, $image_url, $createdAt)",

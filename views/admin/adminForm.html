@@ -1,0 +1,80 @@
+<!--main_content-->
+
+{% extends "base.html" %}
+
+{% block main_content %}
+{% from "macros/trailCard.html" import trailCard %}
+<main class="container-fluid">
+    <section class="hero">
+        <span class="eyebrow">
+            Admin Area
+        </span>
+        <h1>
+            Add a new trail
+        </h1>
+        <p>
+            Create new trails with name, title, region, distance, difficulty
+        </p>
+    </section>
+    <section class="formular">
+        form method="post" action="{{ action }}">
+
+        <!-- TITLE-->
+        <div class="form-floating mb-3">
+            <input class="form-control" id="title" name="title" type="text" placeholder="Title"
+                value="{{ trail.title }}" required />
+            <label for="title">Title</label>
+        </div>
+
+        <!-- IMAGE URL-->
+        <div class="form-floating mb-3">
+            <input class="form-control" id="image_url" name="image_url" type="text" placeholder="Image URL"
+                value="{{ trail.image_url }}" required />
+            <label for="image_url">Image URL</label>
+        </div>
+
+        <!-- DISTANCE -->
+        <div class="form-floating mb-3">
+            <input class="form-control" id="distance_km" name="distance_km" type="number" placeholder="Distance (km)"
+                value="{{ trail.distance_km }}" required />
+            <label for="distance_km">Distance (km)</label>
+        </div>
+
+        <!-- REGION -->
+        <div class="form-floating mb-3">
+            <select class="form-select" id="region_name" name="region_name" required>
+                <option value="">Choose a region</option>
+                {% for t in regions %}
+                <option value="{{ t.region_id }}" {% if t.region_id==trail.region_name %}selected{% endif %}>
+                    {{ t.region_name }}, {{ t.region_country }}
+                </option>
+                {% endfor %}
+            </select>
+            <label for="authorId">Region</label>
+        </div>
+
+        <!-- DIFFICULTY-->
+        <div class="form-floating mb-3">
+            <select class="form-select" id="difficulty" name="difficulty" required>
+                <option value="">Choose a grade of difficulty</option>
+                <option value="Easy" selected>Easy</option>
+                <option value="Moderate" selected>Moderate</option>
+                <option value="Hard" selected>Hard</option>
+            </select>
+            <label for="difficulty">Region</label>
+        </div>
+
+        <!-- DESCRIPTION -->
+        <div class="form-floating mb-3">
+            <textarea class="form-control" id="description" name="description" placeholder="Description"
+                style="height: 16rem" required>{{ trial.description }}</textarea>
+            <label for="content">Description (HTML)</label>
+        </div>
+
+
+        <button class="btn btn-primary text-uppercase" type="submit">Save</button>
+        <a class="btn btn-outline-secondary text-uppercase" href="/admin">Cancel</a>
+        </form>
+    </section>
+</main>
+{% endblock main_content %}
