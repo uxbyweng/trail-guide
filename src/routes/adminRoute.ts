@@ -1,8 +1,7 @@
 import { Router } from "express";
-// import { showAdmin } from "../controllers/adminController";
-import { showTrails } from "../controllers/trailController";
+import { showAdmin } from "../controllers/adminController";
 
 const router = Router();
-router.get("/index.html", showTrails);
+router.get("/", showAdmin);
 
 export default router;
