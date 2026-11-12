@@ -1,4 +1,5 @@
 import { getDB } from "../db/database";
+import { updateTrail as updateTrailInModel } from "../controllers/apiTrailController";
 
 export interface Trail {
     id: number;

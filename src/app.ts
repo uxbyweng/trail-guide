@@ -8,6 +8,7 @@ import { fileURLToPath } from "node:url";
 import trailRouter from "./routes/trailRoute";
 import regionRouter from "./routes/regionRoute";
 import adminRouter from "./routes/adminRoute";
+import apiRouter from "./routes/apiRoute";
 
 const app = express();
 
@@ -27,12 +28,14 @@ app.set("view engine", "html");
 app.locals.year = new Date().getFullYear(); // steht dadurch als {{ year }} in jedem nunjucks templatee zur verfügung
 app.use(express.static(path.join(projectRoot, "public")));
 app.use(express.urlencoded({ extended: true })); // Formulardaten lesen (req.body)
+app.use(express.json());
 app.use(logger); // Logger einbinden (vor den Routes)
 app.use(loadRegions);
 
 app.use("/", trailRouter);
 app.use("/", regionRouter);
 app.use("/admin/", adminRouter);
+app.use("/api/", apiRouter);
 
 // Datenbank verbinden
 connectDB();
