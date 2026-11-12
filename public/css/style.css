@@ -673,6 +673,37 @@ article.trail-detail > header {
     font-size: 1.25rem;
 }
 
+/* ---------- Admin: floating "Add trail" button ---------- */
+
+.fab-add {
+    position: fixed; /* bleibt beim Scrollen an derselben Stelle */
+    right: 20px;
+    bottom: 20px;
+    z-index: 100; /* liegt über den Karten */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #1a73e8;
+    color: #ffffff; /* das Plus nutzt currentColor, ist also weiß */
+    box-shadow: 0 4px 12px rgb(0 0 0 / 0.3);
+    text-decoration: none;
+    transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.fab-add:hover {
+    background: #1558b8;
+    color: #ffffff;
+    transform: scale(1.08);
+}
+
+.fab-add:focus-visible {
+    outline: 3px solid rgb(26 115 232 / 0.45);
+    outline-offset: 3px;
+}
+
 /* ---------- Motion ---------- */
 
 @media (prefers-reduced-motion: reduce) {
@@ -681,6 +712,12 @@ article.trail-detail > header {
     }
 
     article:hover {
+        transform: none;
+    }
+
+    .fab-add,
+    .fab-add:hover {
+        transition: none;
         transform: none;
     }
 }
