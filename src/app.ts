@@ -7,6 +7,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import trailRouter from "./routes/trailRoute";
 import regionRouter from "./routes/regionRoute";
+import adminRouter from "./routes/adminRoute";
 
 const app = express();
 
@@ -14,7 +15,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const projectRoot = path.resolve(__dirname, "..");
 
-await ensureLogFile(); // sicherhgehen, dass das Verzeichnis '/logs' existiert
+await ensureLogFile(); // leg Verzeichnis '/logs' an, falls es fehlt
 
 // nunjucks.configure(path.join(projectRoot, "views"), { autoescape: true, express: app });
 nunjucks.configure(path.join(projectRoot, "views"), {
@@ -24,12 +25,13 @@ nunjucks.configure(path.join(projectRoot, "views"), {
 });
 app.set("view engine", "html");
 app.locals.year = new Date().getFullYear(); // steht dadurch als {{ year }} in jedem nunjucks templatee zur verfügung
-app.use(logger); // vor
 app.use(express.static(path.join(projectRoot, "public")));
+app.use(logger); // Logger einbinden (vor den Routes)
 app.use(loadRegions);
 
 app.use("/", trailRouter);
 app.use("/", regionRouter);
+app.use("/admin/", adminRouter);
 
 // Datenbank verbinden
 connectDB();
