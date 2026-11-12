@@ -1,4 +1,5 @@
 import { getDB } from "../db/database";
+import { slugify } from "../utils/slugify-utils";
 
 export interface Trail {
     id: number;
@@ -74,4 +75,22 @@ export function getTrailsByRegionId(regionId: number): TrailWithRegion[] {
 // Trail (slug) aus db entfernen
 export function deleteTrail(slug: string): void {
     getDB().query("DELETE FROM trails WHERE slug = ?").run(slug);
+}
+
+// neuen trail hinzufügen
+export function addPost(trail: Omit<Trail, "region">) {
+    getDB()
+        .query(
+            "INSERT INTO trails (region_id, title, slug, difficulty, description, image_url, createdAt) VALUES ($region_id, $title, $slug, $difficulty, $description, $image_url, $createdAt)",
+        )
+        .run({
+            regionId: trail.region_id,
+            title: trail.title,
+            slug: trail.slug,
+            difficulty: trail.difficulty,
+            distance_km: trail.distance_km,
+            description: trail.description,
+            image_url: trail.image_url,
+            created_at: trail.created_at,
+        });
 }
