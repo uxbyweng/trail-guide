@@ -1,7 +1,16 @@
 import type { Request, Response } from "express";
 import sanitizeHtml from "sanitize-html";
-import { getAllTrails, getTrailBySlug, deleteTrail as deleteTrailFromModel, getTrailById, type Trail, type TrailEditableFields } from "../models/trailModel";
+import {
+    getAllTrails,
+    getTrailBySlug,
+    addTrail,
+    deleteTrail as deleteTrailFromModel,
+    getTrailById,
+    type Trail,
+    type TrailEditableFields,
+} from "../models/trailModel";
 import { getAllRegions } from "../models/regionModel";
+import { slugify } from "../utils/slugify-utils";
 
 export const getTrails = (req: Request, res: Response) => {
     const trails = getAllTrails();
@@ -17,11 +26,6 @@ export const getTrail = (req: Request<{ slug: string }>, res: Response) => {
     }
 
     res.json(trail);
-};
-
-const readId = (req: Request): string => {
-    const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
-    return id ?? "";
 };
 
 export const deleteTrail = (req: Request<{ id: string }>, res: Response) => {
@@ -62,3 +66,28 @@ export function validateTrailBody(body: any) {
 
     return { values, errors };
 }
+
+export const createTrail = (req: Request, res: Response) => {
+    const { values, errors } = validateTrailBody(req.body);
+    const slug = slugify(values.title);
+    const trail = getTrailBySlug(slug);
+
+    if (values.title && !slug) errors.push("Title must contain letters or numbers.");
+
+    if (errors.length > 0) {
+        res.status(400).json({ error: `Error` });
+        return;
+    }
+
+    if (!trail) {
+        res.status(409).json({ error: `There is no slug.` });
+        return;
+    }
+
+    // speichern
+    addTrail({ ...values, slug, created_at: Math.floor(Date.now() / 1000) });
+
+    getTrailBySlug(slug);
+
+    res.status(201).json(trail);
+};
