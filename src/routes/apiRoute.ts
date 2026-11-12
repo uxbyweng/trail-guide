@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { requireApiKey } from "../middleware/apiKey";
-import { getTrails, getTrail, createTrail, deleteTrail } from "../controllers/apiTrailController";
+import { getTrails, getTrail, createTrail, deleteTrail, updateTrail } from "../controllers/apiTrailController";
 import { getRegions, getRegion } from "../controllers/apiRegionController";
 
 const router = Router();
@@ -14,6 +14,8 @@ router.get("/regions", getRegions);
 router.get("/regions/:slug", getRegion);
 
 router.post("/trails", requireApiKey, createTrail);
+
+router.put("/trails/:id", requireApiKey, updateTrail);
 
 router.delete("/trails/:id", requireApiKey, deleteTrail);
 

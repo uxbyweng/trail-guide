@@ -7,6 +7,7 @@ import {
     deleteTrail as deleteTrailFromModel,
     getTrailById,
     type Trail,
+    updateTrail as updateTrailInModel,
     type TrailEditableFields,
 } from "../models/trailModel";
 import { getAllRegions } from "../models/regionModel";
@@ -75,19 +76,35 @@ export const createTrail = (req: Request, res: Response) => {
     if (values.title && !slug) errors.push("Title must contain letters or numbers.");
 
     if (errors.length > 0) {
-        res.status(400).json({ error: `Error` });
+        res.status(400).json({ errors });
         return;
     }
 
-    if (!trail) {
-        res.status(409).json({ error: `There is no slug.` });
+    if (trail) {
+        res.status(409).json({ error: `A trail with the slug '${slug}' already exists.` });
         return;
     }
 
     // speichern
     addTrail({ ...values, slug, created_at: Math.floor(Date.now() / 1000) });
+    const newTrail = getTrailBySlug(slug);
 
-    getTrailBySlug(slug);
+    res.status(201).json(newTrail);
+};
 
-    res.status(201).json(trail);
+export const updateTrail = (req: Request<{ id: string }>, res: Response) => {
+    const trail = getTrailById(Number(req.params.id));
+    if (!trail) {
+        res.status(404).json({ error: `There is no trail with the id '${req.params.id}'.` });
+        return;
+    }
+
+    const { values, errors } = validateTrailBody(req.body);
+    if (errors.length > 0) {
+        res.status(400).json({ errors });
+        return;
+    }
+
+    updateTrailInModel(trail.slug, values);
+    res.status(200).json(getTrailById(trail.id));
 };

@@ -1,5 +1,5 @@
 info:
-  name: DELETE ohne mit falschem API Key
+  name: DELETE mit falschem API Key
   type: http
   seq: 2
 

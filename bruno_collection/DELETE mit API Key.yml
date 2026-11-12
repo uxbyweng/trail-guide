@@ -1,14 +1,14 @@
 info:
-  name: DELETE ohne mit richtigem API Key
+  name: DELETE mit API Key
   type: http
   seq: 3
 
 http:
-  method: DELETE
+  method: PUT
   url: http://localhost:1234/api/trails/9999
   headers:
     - name: x-api-key
-      value: 5fe2c5d9a67d3c4e61f108775819cc0f32c5eb4ce3b1149e6f653112b55a5785
+      value: 5fe20c5d9a67d3c4e61f108775819cc0f32c5eb4ce3b1149e6f653112b55a5785
   auth: inherit
 
 settings:
