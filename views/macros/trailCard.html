@@ -1,3 +1,4 @@
+{% from "macros/icons.html" import icon %}
 {% macro trailCard(t, isAdmin = false) %}
 <article>
     <header>
@@ -32,11 +33,17 @@
             <small>{{ t.createdAt }}</small>
         </p>
         {% if isAdmin %}
-        <form method="post" action="/admin/trails/{{ t.slug }}/delete" style="display: inline"
-            onsubmit="return confirm('Trail wirklich löschen?')">
-            <button type="submit">Delete</button>
-        </form>
-        <a role="button" href="/admin/trails/{{ t.slug }}/edit">Edit</a>
+        <div class="card-actions">
+            <a class="btn-action" href="/admin/trails/{{ t.slug }}/edit">
+                {{ icon("pencil", 16) }} Edit
+            </a>
+            <form method="post" action="/admin/trails/{{ t.slug }}/delete"
+                onsubmit="return confirm('Trail wirklich löschen?')">
+                <button class="btn-action btn-action--danger" type="submit">
+                    {{ icon("trash", 16) }} Delete
+                </button>
+            </form>
+        </div>
         {% endif %}
     </footer>
 </article>
