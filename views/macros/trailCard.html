@@ -11,20 +11,32 @@
         {% endif %}
     </header>
     <ul>
-        <li>{{ t.distance_km }} km</li>
-        <li class="chip-region" title="{{ t.region_name }}, {{ t.region_country }}">{{ t.region_name }}, {{
-            t.region_country }}</li>
+        <li>
+            {{ t.distance_km }} km
+        </li>
+        <li class="chip-region" title="{{ t.region_name }}, {{ t.region_country }}">
+            {{ t.region_name }},
+            {{ t.region_country }}
+        </li>
         <li class="has-badge">
-            <span class="badge badge--{{ t.difficulty }}">{{ t.difficulty | capitalize }}</span>
+            <span class="badge badge--{{ t.difficulty }}">
+                {{ t.difficulty | capitalize }}
+            </span>
         </li>
     </ul>
     <div>
         {{ t.description | safe }}
     </div>
     <footer>
-        <p><small>{{ t.createdAt }}</small></p>
+        <p>
+            <small>{{ t.createdAt }}</small>
+        </p>
         {% if isAdmin %}
-        <a role="button" href="#">Delete</a> <a role="button" href="#">Edit</a>
+        <form method="post" action="/admin/trails/{{ t.slug }}/delete" style="display: inline"
+            onsubmit="return confirm('Trail wirklich löschen?')">
+            <button type="submit">Delete</button>
+        </form>
+        <a role="button" href="#">Edit</a>
         {% endif %}
     </footer>
 </article>

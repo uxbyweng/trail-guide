@@ -44,6 +44,19 @@ export function getTrailBySlug(slug: string): TrailWithRegion | null {
         .get(slug);
 }
 
+export function getTrailById(id: number): TrailWithRegion | null {
+    return getDB()
+        .query<TrailWithRegion, [number]>(
+            `
+            SELECT t.*, r.name AS region_name, r.country AS region_country
+            FROM trails t
+            INNER JOIN regions r ON r.id = t.region_id
+            WHERE t.id = ?
+        `,
+        )
+        .get(id);
+}
+
 export function getTrailsByRegionId(regionId: number): TrailWithRegion[] {
     return getDB()
         .query<TrailWithRegion, [number]>(
@@ -56,4 +69,9 @@ export function getTrailsByRegionId(regionId: number): TrailWithRegion[] {
         `,
         )
         .all(regionId);
+}
+
+// Trail (slug) aus db entfernen
+export function deleteTrail(slug: string): void {
+    getDB().query("DELETE FROM trails WHERE slug = ?").run(slug);
 }

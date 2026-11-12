@@ -1,0 +1,25 @@
+<!--main_content-->
+
+{% extends "base.html" %}
+
+{% block main_content %}
+{% from "macros/trailCard.html" import trailCard %}
+<main class="container-fluid">
+    <section class="hero">
+        <span class="eyebrow">
+            Trail Guide
+        </span>
+        <h1>
+            Find your next trail.
+        </h1>
+        <p>
+            Hikes across the Alps, the Highlands and the Dolomites.
+        </p>
+    </section>
+    <div class="grid">
+        {% for t in trails %}
+        {{ trailCard(t, true) }}
+        {% endfor %}
+    </div>
+</main>
+{% endblock main_content %}
